@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Cinema</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="sign_id">Already registered. Login me!</string>
+    <string name="forgot">Forgot your password?</string>
+</resources>
