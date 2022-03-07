@@ -1,119 +1,72 @@
 package com.gerija.cinema
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.gerija.cinema.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    private lateinit var auth: FirebaseAuth
-    lateinit var oldEmail: SharedPreferences
-    lateinit var oldPassword: SharedPreferences
+
+
+    private val signInLauncher = registerForActivityResult(
+        FirebaseAuthUIActivityResultContract()
+    ) { onSignInResult(it) }
+
+    private lateinit var database: DatabaseReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        auth = Firebase.auth
-        oldEmail = getSharedPreferences("email", MODE_PRIVATE)
-        oldPassword = getSharedPreferences("password", MODE_PRIVATE)
-    }
-
-    /**
-     * Проверяю зашел ли пользователь ранее на ак
-     */
-    override fun onStart() {
-        super.onStart()
-        val currentUser = auth.currentUser
-        if (currentUser != null) {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
+        database = Firebase.database.reference
+        startAuthFirebase()
     }
 
 
     /**
-     * Запускаю функцию регистрации или входа в ак
+     * Настройка через что будет аутификация и запуск
      */
-    override fun onResume() {
-        super.onResume()
-        startNewActivity()
+    private fun startAuthFirebase(){
+        val providers = arrayListOf(AuthUI.IdpConfig.EmailBuilder().build())
+
+        val signInIntent = AuthUI.getInstance()
+            .createSignInIntentBuilder()
+            .setAvailableProviders(providers)
+            .setTheme(R.style.Theme_Cinema)
+            .build()
+        signInLauncher.launch(signInIntent)
     }
+
 
     /**
-     * Запускаю активити для регистрации или для входа
+     * Получения результата как завершится регистрация ак
+     * Запускаю активити для фильмов
      */
-    private fun startNewActivity() {
+    private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
+        val response = result.idpResponse
+        if (result.resultCode == RESULT_OK) {
+            val authUser = FirebaseAuth.getInstance().currentUser
 
-        binding.btRegister.setOnClickListener {
-            signUpFirebase()
-        }
+            authUser?.let {
+                val firebaseUser = User(it.email.toString(), it.uid)
+                database.child("users").child(it.uid).setValue(firebaseUser)
 
-        binding.tvLogin.setOnClickListener {
-            signInFirebase()
-        }
-
-    }
-
-    private fun signUpFirebase() {
-
-        val email = binding.inEmail.text.toString()
-        val password = binding.inPassword.text.toString()
-
-        if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Заполните все поля", Toast.LENGTH_SHORT).show()
-        } else {
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-
-                        oldEmail.edit().putString("email", email).apply()
-                        oldPassword.edit().putString("password", password).apply()
-
-                        val intent = Intent(this, LoginActivity::class.java)
-                        startActivity(intent)
-                    } else {
-                        Toast.makeText(
-                            this, "Пользователь уже зарегистрирован",
-                            Toast.LENGTH_SHORT).show()
-                    }
-                }
-        }
-    }
-
-    private fun signInFirebase() {
-        val email = binding.inEmail.text.toString()
-        val password = binding.inPassword.text.toString()
-
-        if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Заполните все поля", Toast.LENGTH_SHORT).show()
-        } else {
-            if(oldEmail.getString("email", "") == email && oldPassword.getString("password", "") == password){
-                auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            val intent = Intent(this, LoginActivity::class.java)
-                            startActivity(intent)
-                        } else {
-                            Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                    }
-            } else {
-                Toast.makeText(this, "Не найден или не верный пароль", Toast.LENGTH_SHORT)
-                    .show()
+                val intent = Intent(this, MoviesActivity::class.java)
+                startActivity(intent)
             }
-
+        } else {
+            Log.d("onSignInResultError", "${response?.error?.errorCode}")
         }
-
     }
+
 }
