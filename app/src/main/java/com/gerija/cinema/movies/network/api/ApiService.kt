@@ -1,9 +1,6 @@
 package com.gerija.cinema.movies.network.api
 
-import com.gerija.cinema.movies.network.model.DetailsContainer
-import com.gerija.cinema.movies.network.model.MoviesContainerDto
-import com.gerija.cinema.movies.network.model.ResultMovies
-import com.gerija.cinema.movies.network.model.VideoContainer
+import com.gerija.cinema.movies.network.model.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -11,11 +8,17 @@ import retrofit2.http.Query
 
 interface ApiService {
 
+//    @GET("movie/popular")
+//    fun getTopMovies(
+//        @Query("api_key") api_key: String = KEY,
+//        @Query("language") language: String = "ru"
+//    ): Call<MoviesContainerDto>
+
     @GET("movie/popular")
-    fun getTopMovies(
+    suspend fun getTopMovies(
         @Query("api_key") api_key: String = KEY,
         @Query("language") language: String = "ru"
-    ): Call<MoviesContainerDto>
+    ): MoviesContainerDto
 
     @GET("movie/{movie_id}")
     fun getMoviesDetails(
