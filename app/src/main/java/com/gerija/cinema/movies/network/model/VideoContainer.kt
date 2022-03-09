@@ -1,6 +1,6 @@
 package com.gerija.cinema.movies.network.model
 
-data class Test(
+data class VideoContainer(
     val id: Int,
-    val results: List<Result>
+    val results: List<ResultMovies>
 )

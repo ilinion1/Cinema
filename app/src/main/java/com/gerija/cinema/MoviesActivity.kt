@@ -1,11 +1,14 @@
 package com.gerija.cinema
 
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.gerija.cinema.databinding.ActivityMoviewsBinding
 import com.gerija.cinema.movies.network.api.ApiFactory
 import com.gerija.cinema.movies.network.model.MoviesContainerDto
 import com.gerija.cinema.movies.network.model.ResultsDto
@@ -13,20 +16,26 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MoviesActivity : AppCompatActivity() {
+class MoviesActivity : AppCompatActivity(), MoviesAdapter.ItemClickListener {
+    lateinit var binding: ActivityMoviewsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_moviews)
+        binding = ActivityMoviewsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         getMovies()
 
     }
 
-    private fun getMovies(){
+    private fun getMovies() {
         ApiFactory.create().getTopMovies().enqueue(object : Callback<MoviesContainerDto> {
-            override fun onResponse(call: Call<MoviesContainerDto>, response: Response<MoviesContainerDto>) {
+            override fun onResponse(
+                call: Call<MoviesContainerDto>,
+                response: Response<MoviesContainerDto>
+            ) {
                 response.body()?.let { it ->
                     startAdapter(it.results)
+                    binding.progressBarId.visibility = View.GONE
                 }
             }
 
@@ -37,7 +46,7 @@ class MoviesActivity : AppCompatActivity() {
         })
     }
 
-    private fun startAdapter(list: List<ResultsDto>){
+    private fun startAdapter(list: List<ResultsDto>) {
         val recycler = findViewById<RecyclerView>(R.id.recyclerView)
         val adapter = MoviesAdapter(list, this)
         recycler.adapter = adapter
@@ -48,4 +57,13 @@ class MoviesActivity : AppCompatActivity() {
     override fun onBackPressed() {
         finishAffinity()
     }
+
+    override fun onClick(id: Int) {
+
+        val intent = Intent(this@MoviesActivity, DescriptionActivity::class.java)
+        intent.putExtra("id", id)
+        startActivity(intent)
+    }
+
+
 }

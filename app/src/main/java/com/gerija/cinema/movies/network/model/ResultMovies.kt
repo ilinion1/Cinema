@@ -1,6 +1,6 @@
 package com.gerija.cinema.movies.network.model
 
-data class Result(
+data class ResultMovies(
     val id: String,
     val iso_3166_1: String,
     val iso_639_1: String,
