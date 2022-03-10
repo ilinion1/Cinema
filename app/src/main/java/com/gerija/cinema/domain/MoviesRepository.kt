@@ -1,8 +1,9 @@
 package com.gerija.cinema.domain
 
-import com.gerija.cinema.model.network.dto.ResultsDto
+import com.gerija.cinema.data.network.dto.MoviesContainerDto
+
 
 interface MoviesRepository {
 
-    fun getTopMovies():List<ResultsDto>
+    suspend fun getTopMovies():Result<MoviesContainerDto>
 }
