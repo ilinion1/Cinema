@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.gerija.cinema.databinding.ActivityDescriptionBinding
-import com.gerija.cinema.model.network.api.ApiFactory
-import com.gerija.cinema.model.network.dto.DetailsContainerDto
-import com.gerija.cinema.model.network.dto.VideoContainerDto
+import com.gerija.cinema.data.network.api.ApiFactory
+import com.gerija.cinema.data.network.dto.DetailsContainerDto
+import com.gerija.cinema.data.network.dto.VideoContainerDto
 import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback

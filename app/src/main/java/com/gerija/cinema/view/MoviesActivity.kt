@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gerija.cinema.R
 import com.gerija.cinema.databinding.ActivityMoviewsBinding
 import com.gerija.cinema.viewmodel.MoviesViewModel
-import com.gerija.cinema.model.network.dto.ResultsDto
+import com.gerija.cinema.data.network.dto.ResultsDto
 
 class MoviesActivity : AppCompatActivity(), MoviesAdapter.ItemClickListener {
     lateinit var binding: ActivityMoviewsBinding

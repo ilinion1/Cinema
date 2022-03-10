@@ -1,8 +1,8 @@
-package com.gerija.cinema.model.network.api
+package com.gerija.cinema.data.network.api
 
-import com.gerija.cinema.model.network.dto.DetailsContainerDto
-import com.gerija.cinema.model.network.dto.MoviesContainerDto
-import com.gerija.cinema.model.network.dto.VideoContainerDto
+import com.gerija.cinema.data.network.dto.DetailsContainerDto
+import com.gerija.cinema.data.network.dto.MoviesContainerDto
+import com.gerija.cinema.data.network.dto.VideoContainerDto
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

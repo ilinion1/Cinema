@@ -1,4 +1,4 @@
-package com.gerija.cinema.model.network.dto
+package com.gerija.cinema.data.network.dto
 
 data class VideoContainerDto(
     val id: Int,

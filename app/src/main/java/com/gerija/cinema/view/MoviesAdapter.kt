@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.gerija.cinema.R
-import com.gerija.cinema.model.network.dto.ResultsDto
+import com.gerija.cinema.data.network.dto.ResultsDto
 import com.squareup.picasso.Picasso
 
 class MoviesAdapter(private val imageList: List<ResultsDto>,
