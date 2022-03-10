@@ -1,4 +1,4 @@
-package com.gerija.cinema
+package com.gerija.cinema.view
 
 
 import android.content.Intent
@@ -7,12 +7,12 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.gerija.cinema.R
 import com.gerija.cinema.databinding.ActivityMoviewsBinding
-import com.gerija.cinema.movies.network.api.MoviesViewModel
-import com.gerija.cinema.movies.network.model.ResultsDto
+import com.gerija.cinema.viewmodel.MoviesViewModel
+import com.gerija.cinema.model.network.dto.ResultsDto
 
 class MoviesActivity : AppCompatActivity(), MoviesAdapter.ItemClickListener {
     lateinit var binding: ActivityMoviewsBinding

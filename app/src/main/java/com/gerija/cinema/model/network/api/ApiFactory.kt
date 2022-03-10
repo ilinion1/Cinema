@@ -1,4 +1,4 @@
-package com.gerija.cinema.movies.network.api
+package com.gerija.cinema.model.network.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

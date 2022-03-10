@@ -1,6 +1,8 @@
-package com.gerija.cinema.movies.network.api
+package com.gerija.cinema.model.network.api
 
-import com.gerija.cinema.movies.network.model.*
+import com.gerija.cinema.model.network.dto.DetailsContainerDto
+import com.gerija.cinema.model.network.dto.MoviesContainerDto
+import com.gerija.cinema.model.network.dto.VideoContainerDto
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -25,7 +27,7 @@ interface ApiService {
         @Path("movie_id") id: Int,
         @Query("api_key") api_key: String = KEY,
         @Query("language") language: String = "ru"
-    ): Call<DetailsContainer>
+    ): Call<DetailsContainerDto>
 
     @GET("movie/{movie_id}/{videos}")
     fun getVideo(
@@ -33,7 +35,7 @@ interface ApiService {
         @Path("videos") videos: String = "videos",
         @Query("api_key") api_key: String = "d9ca6800f61b80298e342b05311fea59",
         @Query("language") language: String = "ru"
-    ): Call<VideoContainer>
+    ): Call<VideoContainerDto>
 
     companion object {
 

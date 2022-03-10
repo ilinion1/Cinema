@@ -1,11 +1,12 @@
-package com.gerija.cinema.movies.network.api
+package com.gerija.cinema.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gerija.cinema.movies.network.FetchDataUseCase
-import com.gerija.cinema.movies.network.model.MoviesContainerDto
+import com.gerija.cinema.model.network.api.ApiFactory
+import com.gerija.cinema.domain.FetchDataUseCase
+import com.gerija.cinema.model.network.dto.MoviesContainerDto
 import kotlinx.coroutines.launch
 
 class MoviesViewModel : ViewModel() {

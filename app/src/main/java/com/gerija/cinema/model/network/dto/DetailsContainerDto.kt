@@ -1,10 +1,10 @@
-package com.gerija.cinema.movies.network.model
+package com.gerija.cinema.model.network.dto
 
-data class DetailsContainer(
+data class DetailsContainerDto(
     val adult: Boolean,
     val backdrop_path: String,
     val budget: Int,
-    val genres: List<Genre>,
+    val genreDtos: List<GenreDto>,
     val homepage: String,
     val id: Int,
     val imdb_id: String,

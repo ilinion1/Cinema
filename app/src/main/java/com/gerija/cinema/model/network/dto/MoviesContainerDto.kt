@@ -1,4 +1,4 @@
-package com.gerija.cinema.movies.network.model
+package com.gerija.cinema.model.network.dto
 
 data class MoviesContainerDto(
     val results: List<ResultsDto>,

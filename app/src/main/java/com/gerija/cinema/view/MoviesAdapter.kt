@@ -1,15 +1,17 @@
-package com.gerija.cinema
+package com.gerija.cinema.view
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.gerija.cinema.movies.network.model.ResultsDto
+import com.gerija.cinema.R
+import com.gerija.cinema.model.network.dto.ResultsDto
 import com.squareup.picasso.Picasso
 
 class MoviesAdapter(private val imageList: List<ResultsDto>,
-                    private val myItemClickListener: ItemClickListener)
+                    private val myItemClickListener: ItemClickListener
+)
     : RecyclerView.Adapter<MoviesAdapter.MoviesHolder>() {
 
 

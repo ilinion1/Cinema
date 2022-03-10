@@ -1,31 +1,20 @@
-package com.gerija.cinema
+package com.gerija.cinema.view
 
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.MediaController
 import com.gerija.cinema.databinding.ActivityDescriptionBinding
-import com.gerija.cinema.movies.network.api.ApiFactory
-import com.gerija.cinema.movies.network.model.DetailsContainer
-import com.gerija.cinema.movies.network.model.ResultMovies
-import com.gerija.cinema.movies.network.model.VideoContainer
+import com.gerija.cinema.model.network.api.ApiFactory
+import com.gerija.cinema.model.network.dto.DetailsContainerDto
+import com.gerija.cinema.model.network.dto.VideoContainerDto
 import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 
-import androidx.annotation.NonNull
-
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-
-import android.R
-
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-
-
 
 
 class DescriptionActivity : AppCompatActivity() {
@@ -42,20 +31,20 @@ class DescriptionActivity : AppCompatActivity() {
     private fun getDetails(){
         val i = intent.getIntExtra("id", 0)
         Log.d("MyLog3", "$i")
-        ApiFactory.create().getMoviesDetails(i).enqueue(object : Callback<DetailsContainer>{
+        ApiFactory.create().getMoviesDetails(i).enqueue(object : Callback<DetailsContainerDto>{
 
-            override fun onResponse(call: Call<DetailsContainer>, response: Response<DetailsContainer>) {
+            override fun onResponse(call: Call<DetailsContainerDto>, response: Response<DetailsContainerDto>) {
                 setContent(response)
                 setVisibility()
             }
 
-            override fun onFailure(call: Call<DetailsContainer>, t: Throwable) {
+            override fun onFailure(call: Call<DetailsContainerDto>, t: Throwable) {
                 Log.d("onFailureDescriptionAct", "${t.message}")
             }
         })
 
-        ApiFactory.create().getVideo(i).enqueue(object : Callback<VideoContainer>{
-            override fun onResponse(call: Call<VideoContainer>, response: Response<VideoContainer>) {
+        ApiFactory.create().getVideo(i).enqueue(object : Callback<VideoContainerDto>{
+            override fun onResponse(call: Call<VideoContainerDto>, response: Response<VideoContainerDto>) {
                 Log.d("MyLog", "${response.body()?.results}")
                 val list = arrayListOf<String>()
 
@@ -76,7 +65,7 @@ class DescriptionActivity : AppCompatActivity() {
 
             }
 
-            override fun onFailure(call: Call<VideoContainer>, t: Throwable) {
+            override fun onFailure(call: Call<VideoContainerDto>, t: Throwable) {
                 Log.d("onFailureVideo", "${t.message}")
             }
 
@@ -84,7 +73,7 @@ class DescriptionActivity : AppCompatActivity() {
 
     }
 
-    private fun setContent(response: Response<DetailsContainer>) = with(binding){
+    private fun setContent(response: Response<DetailsContainerDto>) = with(binding){
         val path = "https://image.tmdb.org/t/p/w500"
         Picasso.get().load(path+response.body()?.backdrop_path).into(imageBanner)
         detailsTitle.text = response.body()?.title

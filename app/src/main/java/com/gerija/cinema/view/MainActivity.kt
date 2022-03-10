@@ -1,22 +1,19 @@
-package com.gerija.cinema
+package com.gerija.cinema.view
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.MediaController
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.gerija.cinema.R
+import com.gerija.cinema.model.firebase.User
 import com.gerija.cinema.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding

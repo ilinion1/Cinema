@@ -1,3 +1,3 @@
-package com.gerija.cinema
+package com.gerija.cinema.model.firebase
 
 data class User(val email: String, val uid: String)

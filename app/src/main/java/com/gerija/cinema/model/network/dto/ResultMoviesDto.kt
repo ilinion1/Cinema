@@ -1,6 +1,6 @@
-package com.gerija.cinema.movies.network.model
+package com.gerija.cinema.model.network.dto
 
-data class ResultMovies(
+data class ResultMoviesDto(
     val id: String,
     val iso_3166_1: String,
     val iso_639_1: String,
